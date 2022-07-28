@@ -1,7 +1,6 @@
 const path = require("path");
 const rootDir = require("../util/path");
-
-const products = [];
+const Product = require('../models/product');
 
 exports.getProduct = (req, res, next) => {
     res.render('add-product',{ pageTitle:'Add-Product'})
@@ -10,13 +9,14 @@ exports.getProduct = (req, res, next) => {
 
 exports.addProduct = (req, res, next) => {
     console.log(req.body);
-    products.push({title:req.body.title});
+    const product = new Product(req.body.title);
+     product.save();
     res.redirect('/');
 }
 
 exports.getAllProduct = (req, res, next) => {
    
-    console.log(products);
+  const products = Product.fetchAll();
   
     res.render("shop", {
       prods: products,
