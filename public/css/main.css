@@ -54,8 +54,9 @@ main {
 .grid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  /* justify-content: space-around; */
   align-items: stretch;
+  grid-gap: 10px;
 }
 
 .card {
@@ -106,3 +107,13 @@ main {
   background-color: #00695c;
   color: white;
 }
+
+.info{
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+.operations{
+  display: flex;
+  justify-content: center;
+}
+
