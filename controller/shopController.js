@@ -3,6 +3,7 @@ const rootDir = require("../util/path");
 const Product = require("../models/product");
 const fs = require("fs");
 const csv = require('fast-csv');
+const Cart = require("../models/cart");
 
 
 const p = path.join(
@@ -95,9 +96,8 @@ exports.getAllProduct = (req, res, next) => {
 exports.getProduct = (req, res, next) =>{
   const prodId = req.params.productId
   Product.findById(prodId, product => {
-    console.log(product);
+    res.render('shop/product-detail', {product: product, pageTitle:product.title, path:"/products"});
   })
-  res.redirect('/');
 }
 
 
@@ -120,6 +120,18 @@ exports.getCart = async (req, res, next) =>{
     path:'/cart',
     pageTitle:'Your Cart'
   });
+}
+
+exports.postCart = (req, res, next) =>{
+
+  const prodId = req.body.productId;
+
+  Product.findById(prodId, product => {
+    
+    Cart.addProduct(prodId, product.price);
+  })
+
+  res.redirect('/cart');
 }
 
 exports.getOrders = async (req, res, next) =>{
