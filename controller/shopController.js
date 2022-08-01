@@ -85,12 +85,20 @@ exports.getAllProduct = (req, res, next) => {
     
     res.render("shop/product-list", {
       prods: products,
-      pageTitle: "Shop",
+      pageTitle: "All Products",
       path: "/products",
       
     });
   });
 };
+
+exports.getProduct = (req, res, next) =>{
+  const prodId = req.params.productId
+  Product.findById(prodId, product => {
+    console.log(product);
+  })
+  res.redirect('/');
+}
 
 
 exports.getIndex = (req, res, next) => {
@@ -105,10 +113,10 @@ exports.getIndex = (req, res, next) => {
 
 exports.getCart = async (req, res, next) =>{
 
-  // const members = await readJsonFileAwait;
+   const members = await readJsonFileAwait;
 
   res.render('shop/cart',{
-    // mems: members,
+     mems: members,
     path:'/cart',
     pageTitle:'Your Cart'
   });
@@ -122,9 +130,6 @@ exports.getOrders = async (req, res, next) =>{
     pageTitle:'Your Orders'
   });
 }
-
-
-
 
 
 exports.getCheckout = (req, res, next) =>{
