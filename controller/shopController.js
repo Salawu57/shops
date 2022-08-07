@@ -114,14 +114,41 @@ exports.getIndex = (req, res, next) => {
 
 exports.getCart = async (req, res, next) =>{
 
-   const members = await readJsonFileAwait;
+  Cart.getCart(cart => {
 
-  res.render('shop/cart',{
-     mems: members,
-    path:'/cart',
-    pageTitle:'Your Cart'
+    Product.fetchAll(products => {
+      const cartProducts =[];
+      for(product of products){
+        const cartProductData = cart.products.find(prod => prod.id === product.id)
+        if(cart.products.find(prod => prod.id === product.id)){
+         cartProducts.push({productData: product, qty: cartProductData.qty})
+        }
+      }
+
+    res.render('shop/cart',{
+     path:'/cart',
+     pageTitle:'Your Cart',
+     products: cartProducts
+   });
+    
   });
+
+});
+
+  
 }
+
+
+// exports.getCart2 = async (req, res, next) =>{
+
+//   const members = await readJsonFileAwait;
+
+//  res.render('shop/cart',{
+//     mems: members,
+//    path:'/cart',
+//    pageTitle:'Your Cart'
+//  });
+// }
 
 exports.postCart = (req, res, next) =>{
 
@@ -130,7 +157,7 @@ exports.postCart = (req, res, next) =>{
   Product.findById(prodId, product => {
     
     Cart.addProduct(prodId, product.price);
-    
+
   })
 
   res.redirect('/cart');
