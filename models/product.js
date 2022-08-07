@@ -25,11 +25,8 @@ module.exports = class Product {
     this.price = price
   }
 
-
-
-
   save() {
-
+    
     getProductsFromFIle((products) => {
       products.push(this);
       fs.writeFile(p, JSON.stringify(products), (err) => {

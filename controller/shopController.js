@@ -3,7 +3,13 @@ const rootDir = require("../util/path");
 const Product = require("../models/product");
 const fs = require("fs");
 const csv = require('fast-csv');
+const pdfMake = require('../pdfmaker/pdfmake');
+const vfsFonts = require('../pdfmaker/vfs_fonts');
 const Cart = require("../models/cart");
+
+
+pdfMake.vfs = vfsFonts.pdfMake;
+
 
 
 const p = path.join(
@@ -12,20 +18,15 @@ const p = path.join(
   "membership.csv"
 );
 
-
 const p2 = path.join(
   path.dirname(process.mainModule.filename),
   "data",
-  "membership.json"
+  "mem.json"
 );
-
 
 const convertToJson = () => {
 
 }
-
-
-
 
 let data = [];
 
@@ -129,6 +130,7 @@ exports.postCart = (req, res, next) =>{
   Product.findById(prodId, product => {
     
     Cart.addProduct(prodId, product.price);
+    
   })
 
   res.redirect('/cart');

@@ -7,6 +7,7 @@ const adminData = require("./admin");
 const rootDir = require("../util/path");
 
 const shopController = require("../controller/shopController");
+const { route } = require("./admin");
 
 const router = express.Router();
 
@@ -15,6 +16,8 @@ router.get("/", shopController.getIndex);
 router.get('/products', shopController.getAllProduct);
 
 router.get("/products/:productId", shopController.getProduct);
+
+// router.post("/toPdf", shopController.toPdf);
 
 router.get('/cart', shopController.getCart);
 
