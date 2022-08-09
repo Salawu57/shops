@@ -84,10 +84,10 @@ const readFileAwait = async () => {
 
 exports.getAllProduct = (req, res, next) => {
 
-  Product.fetchAll()
-  .then(result =>{
+  Product.findAll()
+  .then(products =>{
     res.render("shop/product-list", {
-      prods: result[0],
+      prods: products,
       pageTitle: "All Products",
       path: "/products",
     });
@@ -99,23 +99,23 @@ exports.getAllProduct = (req, res, next) => {
 exports.getProduct = (req, res, next) =>{
   const prodId = req.params.productId
 
-  Product.findById(prodId)
-  .then(([result]) => {
+  Product.findByPk(prodId)
+  .then(product => {
     res.render(
       'shop/product-detail',
        {
-         product: result[0],
-         pageTitle:result[0].title,
+         product: product,
+         pageTitle:product.title,
           path:"/products"
        });
   }).catch(err => console.log(err));
 }
 
 exports.getIndex = (req, res, next) => {
-  Product.fetchAll()
-  .then(result =>{
+  Product.findAll()
+  .then(products =>{
     res.render("shop/index", {
-      prods: result[0],
+      prods: products,
       pageTitle: "Shop/index",
       path: "/",
     });
@@ -165,7 +165,7 @@ exports.postCart = (req, res, next) =>{
 
   const prodId = req.body.productId;
 
-  Product.findById(prodId, product => {
+  Product.findByPk(prodId, product => {
     
     Cart.addProduct(prodId, product.price);
 
@@ -176,7 +176,7 @@ exports.postCart = (req, res, next) =>{
 
 exports.postCartDeleteProduct = (req, res, next) =>{
 const prodId = req.body.productId;
-Product.findById(prodId, product =>{
+Product.findByPk(prodId, product =>{
   Cart.deleteProduct(prodId, product.price);
   res.redirect('/cart');
 });
