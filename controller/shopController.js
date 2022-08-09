@@ -83,15 +83,17 @@ const readFileAwait = async () => {
 }
 
 exports.getAllProduct = (req, res, next) => {
-  const products = Product.fetchAll((products) => {
-    
+
+  Product.fetchAll()
+  .then(result =>{
     res.render("shop/product-list", {
-      prods: products,
+      prods: result[0],
       pageTitle: "All Products",
       path: "/products",
-      
     });
-  });
+  })
+  .catch(err => console.log(err));
+
 };
 
 exports.getProduct = (req, res, next) =>{
@@ -101,15 +103,16 @@ exports.getProduct = (req, res, next) =>{
   })
 }
 
-
 exports.getIndex = (req, res, next) => {
-  const products = Product.fetchAll((products) => {
+  Product.fetchAll()
+  .then(result =>{
     res.render("shop/index", {
-      prods: products,
+      prods: result[0],
       pageTitle: "Shop/index",
       path: "/",
     });
-  });
+  })
+  .catch(err => console.log(err));
 };
 
 exports.getCart = async (req, res, next) =>{
@@ -139,16 +142,16 @@ exports.getCart = async (req, res, next) =>{
 }
 
 
-// exports.getCart2 = async (req, res, next) =>{
+exports.getMember = async (req, res, next) =>{
 
-//   const members = await readJsonFileAwait;
+  const members = await readJsonFileAwait;
 
-//  res.render('shop/cart',{
-//     mems: members,
-//    path:'/cart',
-//    pageTitle:'Your Cart'
-//  });
-// }
+ res.render('admin/membership',{
+    mems: members,
+   path:'/member',
+   pageTitle:'member'
+ });
+}
 
 exports.postCart = (req, res, next) =>{
 
@@ -179,7 +182,6 @@ exports.getOrders = async (req, res, next) =>{
     pageTitle:'Your Orders'
   });
 }
-
 
 exports.getCheckout = (req, res, next) =>{
   res.render('shop/checkout',{
