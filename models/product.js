@@ -14,9 +14,15 @@ module.exports = class Product {
    return db.execute('INSERT INTO products(title, price, imageUrl, description) VALUES(?,?,?,?)',[this.title,this.price,this.imageUrl,this.description]);
   }
 
+
+  updateProduct(){
+    return db.execute('UPDATE products SET title =?, price =?, imageUrl =?, description =? WHERE products.id = ?', [this.title,this.price,this.imageUrl,this.description,this.id])
+  }
+
   static deleteById(id){
 
-    
+    return db.execute('DELETE FROM products WHERE products.id = ?', [id]);
+
   }
 
   static fetchAll(cb) {
@@ -24,7 +30,7 @@ module.exports = class Product {
     return db.execute('SELECT * FROM products');
   }
 
-  static findById(id, cb){
-
+  static findById(id){
+   return db.execute('SELECT * FROM products WHERE products.id = ?',[id]);
   }
 };
