@@ -59,8 +59,7 @@ exports.getAddProduct = (req, res, next) => {
        product.imageUrl = updatedImageUrl;
        return product.save();
      })
-    .then( result => res.redirect('/admin/products')).catch(err => console.log(err));
-
+    .then(result => res.redirect('/admin/products')).catch(err => console.log(err));
   };
   
   exports.getProducts = (req, res, next) =>{
@@ -76,6 +75,7 @@ exports.getAddProduct = (req, res, next) => {
   .catch(err => console.log(err));
   }
 
+  
   exports.postDeleteProduct = (req, res, next) =>{
     const prodId = req.body.productId;
 

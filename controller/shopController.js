@@ -85,7 +85,7 @@ const readFileAwait = async () => {
 exports.getAllProduct = (req, res, next) => {
 
   Product.findAll()
-  .then(products =>{
+  .then(products => {
     res.render("shop/product-list", {
       prods: products,
       pageTitle: "All Products",
@@ -110,6 +110,7 @@ exports.getProduct = (req, res, next) =>{
        });
   }).catch(err => console.log(err));
 }
+
 
 exports.getIndex = (req, res, next) => {
   Product.findAll()
